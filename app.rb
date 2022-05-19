@@ -1,8 +1,8 @@
 require('sinatra')
 require('sinatra/reloader')
 require('./lib/author')
-# require('./lib/SONG')
-require('./lib/book')
+require('./lib/Book')
+# require('./lib/artist')
 require('pry')
 also_reload('lib/**/*.rb')
 require("pg")
@@ -46,7 +46,7 @@ end
 
 patch('/authors/:id') do
   @author = Author.find(params[:id].to_i())
-  @author.update({:name => params[:name], :book_name => params[:book_name]})
+  @author.update({:name => params[:name], :artist_name => params[:artist_name]}) IDK
   redirect to('/authors')
 end
 
@@ -56,37 +56,37 @@ delete('/authors/:id') do
   redirect to('/authors')
 end
 
-# # ----- SONG route ------
+# ----- Book route ------
 
-# # get the detail for a specific SONG (ex: lyrics & SONGwriters)
-# get('/authors/:id/SONGs/:SONG_id') do
-#     @SONG = SONG.find(params[:SONG_id].to_i())
-#     erb(:SONG)
-#   end
+# get the detail for a specific Book (ex: lyrics & Bookwriters)
+get('/authors/:id/Books/:book_id') do
+    @Book = Book.find(params[:book_id].to_i())
+    erb(:Book)
+  end
   
-#   # post a new SONG. After the SONG is added, sinatra will route to the view for the author the SONG belongs to
-#   post('/authors/:id/SONGs') do
-#     @author = Author.find(params[:id].to_i())
-#     SONG = SONG.new({:name => params[:SONG_name], :album_id => @author.id, :id => nil})
-#     SONG.save()
-#     erb(:author)
-#   end
+  # post a new Book. After the Book is added, sinatra will route to the view for the author the Book belongs to
+  post('/authors/:id/Books') do
+    @author = Author.find(params[:id].to_i())
+    Book = Book.new({:name => params[:Book_name], :album_id => @author.id, :id => nil})
+    Book.save()
+    erb(:author)
+  end
   
-#   # edit a SONG & then route back to the author view
-#   patch('/authors/:id/SONGs/:SONG_id') do
-#     @author = Author.find(params[:id].to_i())
-#     SONG = SONG.find(params[:SONG_id].to_i())
-#     SONG.update(params[:name], @author.id)
-#     erb(:author)
-#   end
+  # edit a Book & then route back to the author view
+  patch('/authors/:id/Books/:book_id') do
+    @author = Author.find(params[:id].to_i())
+    Book = Book.find(params[:book_id].to_i())
+    Book.update(params[:name], @author.id)
+    erb(:author)
+  end
   
-#   # delete a SONG & then route back to the author view
-#   delete('/authors/:id/SONGs/:SONG_id') do
-#     SONG = SONG.find(params[:SONG_id].to_i())
-#     SONG.delete()
-#     @author = Author.find(params[:id].to_())
-#     erb(:author)
-#   end
+  # delete a Book & then route back to the author view
+  delete('/authors/:id/Books/:book_id') do
+    Book = Book.find(params[:book_id].to_i())
+    Book.delete()
+    @author = Author.find(params[:id].to_())
+    erb(:author)
+  end
   
   # ------ Search route -------
   
@@ -100,73 +100,73 @@ end
     erb(:search_results)
   end
   
-  # ------- book route -------
+  # ------- artist route -------
   
-  # get a list of all books
-  get('/books') do
-    @books = book.all
-    erb(:books)
+  # get a list of all artists
+  get('/artists') do
+    @artists = artist.all
+    erb(:artists)
   end
   
-  # add a new book
-  get('/books/new') do
-    erb(:new_book)
+  # add a new artist
+  get('/artists/new') do
+    erb(:new_artist)
   end
   
   # look at the detail page for a single author
-  get('/books/:id') do
-    @book = book.find(params[:id].to_i())
-    erb(:book)
+  get('/artists/:id') do
+    @artist = artist.find(params[:id].to_i())
+    erb(:artist)
   end
 
-  # add a new author to the list of books
-post('/books') do
-    name = params[:book_name]
-    book = book.new({:name => name, :id => nil})
-    book.save()
-    redirect to('/books')
+  # add a new author to the list of artists
+post('/artists') do
+    name = params[:artist_name]
+    artist = artist.new({:name => name, :id => nil})
+    artist.save()
+    redirect to('/artists')
   end
   
   # update a single author
-  patch('/books/:id') do
-    @book = book.find(params[:id].to_i())
-    @book.update(:name => params[:name], :author_name => params[:author_name])
-    redirect to('/books')
+  patch('/artists/:id') do
+    @artist = artist.find(params[:id].to_i())
+    @artist.update(:name => params[:name], :author_name => params[:author_name])
+    redirect to('/artists')
   end
   
   # delete an author from list
-  delete('/books/:id') do
-    @book = book.find(params[:id].to_i())
-    @book.delete()
-    redirect to('/books')
+  delete('/artists/:id') do
+    @artist = artist.find(params[:id].to_i())
+    @artist.delete()
+    redirect to('/artists')
   end
 
-#   # Get the detail for a specific SONG such as lyrics and SONGwriters.
-# get('/authors/:id/SONGs/:SONG_id') do
-#     @SONG = SONG.find(params[:SONG_id].to_i())
-#     erb(:SONG)
-#   end
+  # Get the detail for a specific Book such as lyrics and Bookwriters.
+get('/authors/:id/Books/:book_id') do
+    @Book = Book.find(params[:book_id].to_i())
+    erb(:Book)
+  end
   
-#   # Post a new SONG. After the SONG is added, Sinatra will route to the view for the author the SONG belongs to.
-#   post('/authors/:id/SONGs') do
-#     @author = Author.find(params[:id].to_i())
-#     SONG = SONG.new({:name => params[:SONG_name],:album_id => @author.id,:id => nil})
-#     SONG.save()
-#     erb(:author)
-#   end
+  # Post a new Book. After the Book is added, Sinatra will route to the view for the author the Book belongs to.
+  post('/authors/:id/Books') do
+    @author = Author.find(params[:id].to_i())
+    Book = Book.new({:name => params[:Book_name],:album_id => @author.id,:id => nil})
+    Book.save()
+    erb(:author)
+  end
   
-#   # Edit a SONG and then route back to the author view.
-#   patch('/authors/:id/SONGs/:SONG_id') do
-#     @author = Author.find(params[:id].to_i())
-#     SONG = SONG.find(params[:SONG_id].to_i())
-#     SONG.update(params[:name], @author.id)
-#     erb(:author)
-#   end
+  # Edit a Book and then route back to the author view.
+  patch('/authors/:id/Books/:book_id') do
+    @author = Author.find(params[:id].to_i())
+    Book = Book.find(params[:book_id].to_i())
+    Book.update(params[:name], @author.id)
+    erb(:author)
+  end
   
-#   # Delete a SONG and then route back to the author view.
-#   delete('/authors/:id/SONGs/:SONG_id') do
-#     SONG = SONG.find(params[:SONG_id].to_i())
-#     SONG.delete
-#     @author = Author.find(params[:id].to_i())
-#     erb(:author)
-#   end
+  # Delete a Book and then route back to the author view.
+  delete('/authors/:id/Books/:book_id') do
+    Book = Book.find(params[:book_id].to_i())
+    Book.delete
+    @author = Author.find(params[:id].to_i())
+    erb(:author)
+  end

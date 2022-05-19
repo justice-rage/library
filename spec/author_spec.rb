@@ -79,28 +79,28 @@ describe '#Author' do
     end
   end
 
-#   describe('#delete') do
-#     it("deletes all songs belonging to a deleted author") do
-#       author = Author.new({:name => "A Love Supreme", :id => nil})
-#       author.save()
-#       song = Song.new({:name => "Naima", :album_id => author.id, :id => nil})
-#       song.save()
-#       author.delete()
-#       expect(Song.find(song.id)).to(eq(nil))
-#     end
-#   end
+  describe('#delete') do
+    it("deletes all books belonging to a deleted author") do
+      author = Author.new({:name => "A Love Supreme", :id => nil})
+      author.save()
+      book = Book.new({:name => "Naima", :album_id => author.id, :id => nil})
+      book.save()
+      author.delete()
+      expect(Book.find(book.id)).to(eq(nil))
+    end
+  end
 
-#   describe('#songs') do
-#     it("returns an author's songs") do
-#       Author.clear()
-#       author = Author.new({:name => "Giant Steps", :id => nil})
-#       author.save()
-#       song = Song.new({:name => "Naima", :album_id => author.id, :id => nil})
-#       song.save()
-#       song2 = Song.new({:name => "Cousin Mary", :album_id => author.id, :id => nil})
-#       song2.save()
-#       expect(author.songs).to(eq([song, song2]))
-#     end
+  describe('#books') do
+    it("returns an author's books") do
+      Author.clear()
+      author = Author.new({:name => "Giant Steps", :id => nil})
+      author.save()
+      book = Book.new({:name => "Naima", :album_id => author.id, :id => nil})
+      book.save()
+      book2 = Book.new({:name => "Cousin Mary", :album_id => author.id, :id => nil})
+      book2.save()
+      expect(author.books).to(eq([book, book2]))
+    end
   end      
   
   # ----- WIP -----      
